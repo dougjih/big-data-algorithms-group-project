@@ -99,6 +99,6 @@ def build_one_hot_basket_dataset(baskets: list) -> pd.DataFrame:
     '''Transform list of baskets to a dataframe in the one-hot format that the mlxtend frequen itemsets functions expect.'''
 
     te = mlxtend.preprocessing.TransactionEncoder()
-    te_ary = te.fit(baskets).transform(baskets)
-    df = pd.DataFrame(te_ary, columns=te.columns_)
+    te_ary = te.fit_transform(baskets, sparse=True)
+    df = pd.DataFrame.sparse.from_spmatrix(te_ary, columns=te.columns_)
     return df
