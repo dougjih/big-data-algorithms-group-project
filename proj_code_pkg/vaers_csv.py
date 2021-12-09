@@ -1,6 +1,5 @@
 import functools
 import pandas as pd
-import dask.dataframe as dd
 
 
 def read_vaers_csv(filename, dtype=None, parse_dates=False):
