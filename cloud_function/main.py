@@ -159,9 +159,14 @@ def build_one_hot_basket_dataset(baskets: list) -> pd.DataFrame:
 
 
 def main(
-    data_path, symptoms_path, vax_path,
-    freq_itemsets_output_path, assoc_rules_output_path,
-    freq_itemsets_min_support, assoc_rule_metric, assoc_rule_min_threshold):
+    data_path='gs://input-data-2zu7/2021VAERSDATA.csv',
+    symptoms_path='gs://input-data-2zu7/2021VAERSSYMPTOMS.csv',
+    vax_path='gs://input-data-2zu7/2021VAERSVAX.csv',
+    freq_itemsets_output_path='gs://output-data-2zu7/freq_itemsets.csv',
+    assoc_rules_output_path='gs://output-data-2zu7/assoc_rules.csv',
+    freq_itemsets_min_support=0.001,
+    assoc_rule_metric="confidence",
+    assoc_rule_min_threshold=0.8):
     '''
     Using the given input VAERS data files, produce in the outpu_path CSV files
     containing frequen itemsets and association rules using the given parameters.
