@@ -34,17 +34,32 @@ def main(
             Minimal threshold for the evaluation metric
     '''
 
+    print(f'Reading {data_path}...')
     data = proj_code_pkg.vaers_csv.read_data_file(data_path)
+    print(f'Reading {symptoms_path}...')
     symptoms = proj_code_pkg.vaers_csv.read_symptoms_file(symptoms_path)
+    print(f'Reading {vax_path}...')
     vax = proj_code_pkg.vaers_csv.read_vax_file(vax_path)
+    print(f'Merging data...')
     merged_data = proj_code_pkg.vaers_csv.merge_dataframes([data, symptoms, vax])
 
+    print(f'Creating baskets...')
     baskets = merged_data.apply(proj_code_pkg.freq_itemsets.build_basket, axis=1)
+    print(f'One-hot encoding baskets...')
     one_hot_baskets_df = proj_code_pkg.freq_itemsets.build_one_hot_basket_dataset(baskets.to_list())
+    print(f'Extracting frequent itemsets with min_support={freq_itemsets_min_support}...')
     frequent_itemsets = mlxtend.frequent_patterns.fpgrowth(
         one_hot_baskets_df, min_support=freq_itemsets_min_support, use_colnames=True)
+    print(f'Generating association rules with metric=\'{assoc_rule_metric}\', min_threshold={assoc_rule_min_threshold}...')
     assoc_rules = mlxtend.frequent_patterns.association_rules(
         frequent_itemsets, metric=assoc_rule_metric, min_threshold=assoc_rule_min_threshold)
 
+    print(f'Saving frequent itemsets to {freq_itemsets_output_path}...')
     frequent_itemsets.to_csv(freq_itemsets_output_path)    
+    print(f'Saving association rules to {assoc_rules_output_path}...')
     assoc_rules.to_csv(assoc_rules_output_path)
+
+if __name__ == '__main__':
+    main('../data/2021VAERSDATA.csv', '../data/2021VAERSSYMPTOMS.csv', '../data/2021VAERSVAX.csv', \
+        'freq_itemsets.csv', 'assoc_rules.csv', \
+        0.001, "confidence", 0.8)
