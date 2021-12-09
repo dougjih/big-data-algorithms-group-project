@@ -6,9 +6,8 @@ Group 7: Harica, Doug
 * [Lightning Talk slides](LightningTalk.pdf)
 * Data source: [VAERS](https://vaers.hhs.gov/index.html)
 
-## Housekeeping Guidelines
+## Work products
 
-* Use GitHub issues to track tasks
-* Provide reproducible code and results
-* Use good Git practice
-* A combination of Jupyter notebooks and Python modules is likely
+* [Presentation Slides](Presentation.pdf)
+* [Project Jupyter notebook](https://github.com/dougjih/big-data-algorithms-group-project/blob/main/VAERS_Project.ipynb)
+* [Project code package](https://github.com/dougjih/big-data-algorithms-group-project/tree/main/proj_code_pkg)
